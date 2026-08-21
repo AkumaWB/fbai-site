@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FBAI — Financial Behavior AI</title>
+<meta name="description" content="FBAI — Financial Behavior AI. Making money behaviour predictable. Coming soon.">
+<meta name="theme-color" content="#05101F">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://fbai.uk/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FBAI">
+<meta property="og:url" content="https://fbai.uk/">
+<meta property="og:title" content="FBAI — Financial Behavior AI">
+<meta property="og:description" content="Making money behaviour predictable.">
+<meta property="og:image" content="https://fbai.uk/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FBAI — Financial Behavior AI">
+<meta name="twitter:description" content="Making money behaviour predictable.">
+<meta name="twitter:image" content="https://fbai.uk/og.png">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --navy:      #0A1F3D;
+    --navy-2:    #071630;
+    --navy-3:    #05101F;
+    --ice:       #F2F5F9;
+    --ice-2:     #D6DDE6;
+    --signal:    #00A3C4;
+    --signal-2:  #0087A3;
+    --muted:     #2A3E5C;
+    --muted-2:   #8296AF;
+    --sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ -webkit-text-size-adjust:100%; }
+
+  body{
+    min-height:100svh;
+    background:var(--navy-3);
+    color:var(--ice);
+    font-family:var(--sans);
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* The floor: a single horizon line of signal light at the base of the page.
+     Mirrors the mark — the bar the dot rests under. */
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(120% 70% at 50% 108%, rgba(0,163,196,0.20) 0%, rgba(0,163,196,0.05) 38%, transparent 68%),
+      linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 46%, var(--navy-3) 100%);
+    z-index:-2;
+  }
+  /* Faint grid — structure, barely there */
+  body::after{
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(242,245,249,0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(242,245,249,0.028) 1px, transparent 1px);
+    background-size:72px 72px;
+    -webkit-mask-image:radial-gradient(80% 60% at 50% 42%, #000 0%, transparent 75%);
+    mask-image:radial-gradient(80% 60% at 50% 42%, #000 0%, transparent 75%);
+    z-index:-1;
+    pointer-events:none;
+  }
+
+  .wrap{
+    flex:1;
+    width:100%;
+    max-width:960px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:56px 28px 28px;
+    text-align:center;
+  }
+
+  /* ---- Mark ---- */
+  .mark{ line-height:0; margin-bottom:30px; }
+  .mark svg{ display:block; }
+  .mark .bar{ transform-origin:50% 50%; animation:barIn 1100ms cubic-bezier(.16,1,.3,1) both; }
+  .mark .dot{ animation:dotIn 900ms cubic-bezier(.16,1,.3,1) 420ms both; }
+
+  @keyframes barIn{
+    from{ transform:scaleX(0); opacity:0; }
+    to{ transform:scaleX(1); opacity:1; }
+  }
+  @keyframes dotIn{
+    from{ transform:translateY(-16px); opacity:0; }
+    to{ transform:translateY(0); opacity:1; }
+  }
+
+  /* ---- Wordmark ---- */
+  .wordmark{
+    font-size:clamp(44px, 11vw, 78px);
+    font-weight:800;
+    letter-spacing:-0.045em;
+    line-height:1;
+    color:var(--ice);
+    animation:rise 900ms cubic-bezier(.16,1,.3,1) 200ms both;
+  }
+
+  .eyebrow{
+    margin-top:16px;
+    font-family:var(--mono);
+    font-size:clamp(10px, 2.6vw, 12px);
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--signal);
+    animation:rise 900ms cubic-bezier(.16,1,.3,1) 300ms both;
+  }
+
+  .rule{
+    width:56px;
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--muted), transparent);
+    margin:28px 0;
+    animation:rise 900ms cubic-bezier(.16,1,.3,1) 380ms both;
+  }
+
+  h1{
+    font-size:clamp(30px, 6.6vw, 54px);
+    font-weight:600;
+    letter-spacing:-0.028em;
+    line-height:1.1;
+    max-width:min(16ch, 100%);
+    color:var(--ice);
+    animation:rise 900ms cubic-bezier(.16,1,.3,1) 440ms both;
+  }
+
+
+  /* ---- Status ---- */
+  .status{
+    margin-top:46px;
+    display:inline-flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 20px 11px 16px;
+    border:1px solid var(--muted);
+    border-radius:999px;
+    background:rgba(10,31,61,0.55);
+    -webkit-backdrop-filter:blur(8px);
+    backdrop-filter:blur(8px);
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--ice-2);
+    animation:rise 900ms cubic-bezier(.16,1,.3,1) 620ms both;
+  }
+  .pulse{
+    width:7px; height:7px;
+    border-radius:999px;
+    background:var(--signal);
+    position:relative;
+    flex:none;
+  }
+  .pulse::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:999px;
+    background:var(--signal);
+    animation:pulse 2.4s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{ transform:scale(1); opacity:.7; }
+    70%,100%{ transform:scale(3.4); opacity:0; }
+  }
+
+  /* ---- Contact ---- */
+  .contact{
+    margin-top:30px;
+    font-size:16px;
+    color:var(--muted-2);
+    letter-spacing:-0.004em;
+    animation:rise 900ms cubic-bezier(.16,1,.3,1) 700ms both;
+  }
+  .contact a{
+    color:var(--ice);
+    text-decoration:none;
+    border-bottom:1px solid var(--signal-2);
+    padding-bottom:2px;
+    transition:color .18s ease, border-color .18s ease;
+  }
+  .contact a:hover,
+  .contact a:focus-visible{ color:var(--signal); border-color:var(--signal); }
+
+  /* ---- Footer ---- */
+  footer{
+    padding:28px;
+    text-align:center;
+    font-family:var(--mono);
+    font-size:10.5px;
+    line-height:1.9;
+    letter-spacing:0.06em;
+    color:#5B6E88;
+    animation:rise 900ms cubic-bezier(.16,1,.3,1) 820ms both;
+  }
+  footer .sep{ color:var(--muted); padding:0 8px; }
+  footer{ overflow-wrap:anywhere; }
+
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(14px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{ animation:none !important; transition:none !important; }
+  }
+
+  @media (max-width:520px){
+    .wrap{ padding:64px 22px 32px; }
+    .mark{ margin-bottom:34px; }
+    .rule{ margin:32px 0; }
+    .status{ margin-top:44px; letter-spacing:0.14em; }
+    footer{ font-size:9.5px; letter-spacing:0.03em; padding:24px 18px; }
+    footer .sep{ display:block; height:0; overflow:hidden; padding:0; }
+    .wordmark{ letter-spacing:-0.04em; }
+    h1{ font-size:clamp(28px, 8vw, 36px); }
+    .contact{ font-size:14px; }
+  }
+</style>
+</head>
+<body>
+
+  <main class="wrap">
+
+    <div class="mark" aria-hidden="true">
+      <svg width="104" height="104" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect class="bar" x="20" y="40" width="60" height="4" fill="#F2F5F9"/>
+        <circle class="dot" cx="50" cy="68" r="10" fill="#00A3C4"/>
+      </svg>
+    </div>
+
+    <div class="wordmark">FBAI</div>
+    <div class="eyebrow">Financial Behavior AI</div>
+
+    <div class="rule"></div>
+
+    <h1>Making money behaviour predictable.</h1>
+
+
+    <div class="status"><span class="pulse"></span>Coming soon</div>
+
+    <p class="contact">
+      Banks and partners: <a href="mailto:wafi@fbai.uk">wafi@fbai.uk</a>
+    </p>
+
+  </main>
+
+  <footer>
+    FBAI Ltd · Registered in England and Wales · Company No. 17348703
+    <span class="sep">·</span>
+    United Kingdom &amp; United Arab Emirates
+  </footer>
+
+</body>
+</html>
